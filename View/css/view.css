@@ -1,44 +1,165 @@
+/* Reset estilos antiguos de .modify y media query eliminados */
+/* Variables de color base */
 :root {
-  --header-bg-and-lighttxt-color: #213448;
-  --main-bg-color:#547792;
-  --Darktxt-color: #D9D9D9;
-  --Footer-bg-color: #111123;
-  --article-bg-color: #94B4C1;
-
+    --bg-panel: #94b4c1;
+    --bg-input: #D9D9D9;
+    --text-dark: #213448;
+    --btn-dark: #122335;
+    --btn-dark-hover: #0b1b2a;
+    --main-bg: #547792;
 }
+/* Estilos generales */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--main-bg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+}
+
 header {
-  background-color: var(--header-bg-and-lighttxt-color);
-  color: var(--Darktxt-color);
-  padding: 15px;
-}
-main {
-  background-color: var(--main-bg-color);
-  padding-top: 50px;
-  padding-bottom: 50px;
-  padding-left: 200px;
-  padding-right: 200px;
-}
-article{
-  background-color: var(--article-bg-color);
-  color: var(--header-bg-and-lighttxt-color);
-    padding-top: 15px;
-  padding-bottom: 15px;
-  padding-left: 60px;
-  padding-right: 60px;
-  border-radius: 15px;
-}
-
-input{
-  border-radius: 7px ;
-}
-button{
-  border-radius: 15px ;
-  background-color: var(--header-bg-and-lighttxt-color);
-  color: var(--Darktxt-color);
+    position: absolute;
+    top: 0;
+    width: 100%;
+    background-color: var(--text-dark);
+    color: var(--bg-input);
+    text-align: center;
+    padding: 10px;
+    border-radius: 0 0 20px 20px;
 }
 
 footer {
-  background-color: var(--Footer-bg-color);
-  color: var(--Darktxt-color);
-  padding: 15px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background-color: var(--btn-dark-hover);
+    color: var(--bg-input);
+    text-align: center;
+    padding: 10px;
+    border-radius: 20px 20px 0 0;
+}
+
+/* Contenedor principal */
+#modify {
+    position: relative;
+    width: 100%;
+    max-width: 760px;
+    padding: 32px 36px 28px;
+    background: var(--bg-panel);
+    opacity: 0.95;
+    border-radius: 28px;
+    box-shadow: 0 8px 24px rgba(0, 0, 95, 0.15);
+    margin: 96px auto 96px;
+}
+
+#modify h2 {
+    margin: 0 0 16px;
+    text-align: center;
+    color: var(--text-dark);
+    text-decoration: underline;
+    font-weight: 700;
+}
+
+.form-flex {
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+}
+
+.avatar {
+    flex: 0 0 120px;
+    width: 120px;
+    height: 120px;
+    border-radius: 9999px;
+    background: var(--bg-input);
+}
+
+.fields {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    flex: 1 1 auto;
+}
+
+.field {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.field label {
+    width: 180px;
+    text-align: right;
+    color: var(--text-dark);
+    font-weight: 600;
+}
+
+.field input,
+.field textarea {
+    flex: 1 1 auto;
+}
+
+/* Estilos del formulario */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+label {
+    font-weight: bold;
+    color: var(--text-dark);
+    margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="password"],
+textarea {
+    padding: 8px 16px;
+    border: 0;
+    border-radius: 9999px;
+    font-size: 16px;
+    width: 100%;
+    box-sizing: border-box;
+    background: var(--bg-input);
+    outline: none;
+}
+
+textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+.actions {
+    display: flex;
+    justify-content: center;
+    gap: 18px;
+    margin-top: 18px;
+}
+
+.btn {
+    padding: 8px 24px;
+    border: 0;
+    border-radius: 9999px;
+    font-size: 16px;
+    cursor: pointer;
+    color: var(--bg-input);
+    background: var(--btn-dark);
+    transition: background-color .2s ease;
+}
+
+.btn:hover { background: var(--btn-dark-hover); }
+.btn-secondary { background: var(--btn-dark); }
+
+@media (max-width: 600px) {
+    .form-flex { flex-direction: column; align-items: stretch; }
+    .avatar { align-self: center; margin-bottom: 8px; }
+    .field { flex-direction: column; align-items: stretch; }
+    .field label { width: auto; text-align: left; }
 }
