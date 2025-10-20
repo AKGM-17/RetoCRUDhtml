@@ -163,3 +163,33 @@ textarea {
     .field { flex-direction: column; align-items: stretch; }
     .field label { width: auto; text-align: left; }
 }
+/* Contenedor del campo de contraseña */
+.password-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+/* Campo de contraseña */
+.password-container input {
+    flex: 1;
+    padding-right: 42px; /* deja espacio para el botón */
+}
+
+/* Botón de mostrar/ocultar */
+.show-btn {
+    position: absolute;
+    right: 10px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    color: var(--text-dark);
+    transition: 0.2s ease;
+}
+
+.show-btn:hover {
+    color: var(--btn-dark);
+    transform: scale(1.1);
+}
