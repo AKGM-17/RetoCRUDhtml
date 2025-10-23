@@ -1,19 +1,19 @@
 <?php
 require_once '../config/Database.php';
-require_once '../model/LibroModel.php';
+require_once '../model/UserModel.php';
 
 
-class LibroController {
-    private $libroModel;
+class CRUDController {
+    private $UserModel;
 
     public function __construct() {
         $database = new Database();
         $db = $database->getConnection();
-        $this->libroModel = new LibroModel($db);
+        $this->UserModel = new UserModel($db);
     }
 
     public function LogIn($usname, $passwrd) {
-        return $this->libroModel->buscarPorIsbn($isbn);
+        return $this->UserModel->Logger($isLogged);
     }
 
 }
