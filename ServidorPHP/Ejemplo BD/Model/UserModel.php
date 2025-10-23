@@ -44,7 +44,7 @@ class UserModel {
 
         $users = [];
         foreach ($result as $row) {
-            $users[] = new User($row['profile_Code'], $row['card_no'], $row['gender']);
+            $users[] = new User($row['Profile_code'], $row['card_no'], $row['gender']);
         }
         return $users;
     }

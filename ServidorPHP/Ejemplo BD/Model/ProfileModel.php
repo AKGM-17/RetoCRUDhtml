@@ -12,14 +12,22 @@ class ProfileModel {
     }
 
     public function buscarPorId($id) {
-        $query = "SELECT * FROM Profile_ WHERE id = :id";
+        // Use Profile_code as identifier if that's the primary key
+        $query = "SELECT * FROM Profile_ WHERE Profile_code = :id OR id = :id";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':id', $id);
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($result) {
-            return new Profile($result['id'], $result['username'], $result['name'], $result['surname'], $result['gmail'], $result['telephone'], $result['password']);
+            $pid = $result['Profile_code'] ?? $result['profile_Code'] ?? $result['profile_code'] ?? ($result['id'] ?? null);
+            $username = $result['user_name'] ?? $result['Username'] ?? null;
+            $name = $result['name'] ?? $result['Name'] ?? null;
+            $surname = $result['surname'] ?? $result['Surname'] ?? null;
+            $gmail = $result['email'] ?? $result['Email'] ?? null;
+            $telephone = $result['telephone'] ?? $result['Telephone'] ?? null;
+            $password = $result['passwd'] ?? $result['Password'] ?? null;
+            return new Profile($pid, $username, $name, $surname, $gmail, $telephone, $password);
         } else {
             return null;
         }
@@ -44,9 +52,16 @@ class ProfileModel {
 
         $profiles = [];
         foreach ($result as $row) {
-            $users[] = new Profile($row['id'], $row['username'], $row['name'], $row['surname'], $row['gmail'], $row['telephone'], $row['password']);
+            $pid = $row['Profile_code'] ?? $row['profile_Code'] ?? $row['profile_code'] ?? ($row['id'] ?? null);
+            $username = $row['user_name'] ?? $row['Username'] ?? null;
+            $name = $row['name_'] ?? $row['name'] ?? null;
+            $surname = $row['Surname'] ?? $row['Surname'] ?? null;
+            $gmail = $row['email'] ?? $row['Email'] ?? null;
+            $telephone = $row['Telephone'] ?? $row['Telephone'] ?? null;
+            $password = $row['passwd'] ?? $row['Password'] ?? null;
+            $profiles[] = new Profile($pid, $username, $name, $surname, $gmail, $telephone, $password);
         }
-        return $users;
+        return $profiles;
     }
 }
 ?>

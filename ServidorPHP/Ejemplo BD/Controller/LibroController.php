@@ -20,15 +20,21 @@ class LibroController {
     }
 
     public function borrar($isbn) {
-        return $this->libroModel->borrarPorIsbn($isbn);
+        // Not implemented in provided models
+        return false;
     }
 
     public function buscarUser($Profile_code) {
-        return $this->libroModel->buscarPorProfile_code($Profile_code);
+        return $this->userModel->buscarPorProfile_Code($Profile_code);
     }
 
     public function buscarProfile($Profile_code) {
-        return $this->libroModel->buscarPorProfile_code($Profile_code);
+        // The ProfileModel exposes buscarPorId, assuming Profile_code maps to id
+        return $this->profileModel->buscarPorId($Profile_code);
+    }
+
+    public function listarProfiles() {
+        return $this->profileModel->getAllProfiles();
     }
 }
 ?>
