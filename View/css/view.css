@@ -6,13 +6,14 @@
     --text-dark: #213448;
     --btn-dark: #122335;
     --btn-dark-hover: #0b1b2a;
+    --main-bg: #547792;
 }
 /* Estilos generales */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #547792;
+    background-color: var(--main-bg);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -24,8 +25,8 @@ header {
     position: absolute;
     top: 0;
     width: 100%;
-    background-color: #213448;
-    color: white;
+    background-color: var(--text-dark);
+    color: var(--bg-input);
     text-align: center;
     padding: 10px;
     border-radius: 0 0 20px 20px;
@@ -35,8 +36,8 @@ footer {
     position: absolute;
     bottom: 0;
     width: 100%;
-    background-color: #111123;
-    color: white;
+    background-color: var(--btn-dark-hover);
+    color: var(--bg-input);
     text-align: center;
     padding: 10px;
     border-radius: 20px 20px 0 0;
@@ -51,7 +52,7 @@ footer {
     background: var(--bg-panel);
     opacity: 0.95;
     border-radius: 28px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 8px 24px rgba(0, 0, 95, 0.15);
     margin: 96px auto 96px;
 }
 
@@ -111,7 +112,7 @@ form {
 
 label {
     font-weight: bold;
-    color: #333;
+    color: var(--text-dark);
     margin-bottom: 5px;
 }
 
@@ -136,32 +137,11 @@ textarea {
 }
 
 .actions {
-    position: relative;
     display: flex;
-    justify-content: center;  /* Centra el SignUp */
-    align-items: center;
+    justify-content: center;
+    gap: 18px;
     margin-top: 18px;
 }
-
-/* Botón "Atrás" alineado a la derecha del formulario */
-.actions .back-btn {
-    position: absolute;
-    right: 0;                /* pega el botón al borde derecho */
-    background: var(--btn-dark);
-    color: #fff;
-    border: none;
-    border-radius: 9999px;
-    padding: 8px 22px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.2s ease, transform 0.2s ease;
-}
-
-.actions .back-btn:hover {
-    background: var(--btn-dark-hover);
-    transform: translateY(-2px);
-}
-
 
 .btn {
     padding: 8px 24px;
@@ -169,7 +149,7 @@ textarea {
     border-radius: 9999px;
     font-size: 16px;
     cursor: pointer;
-    color: #fff;
+    color: var(--bg-input);
     background: var(--btn-dark);
     transition: background-color .2s ease;
 }
@@ -183,38 +163,3 @@ textarea {
     .field { flex-direction: column; align-items: stretch; }
     .field label { width: auto; text-align: left; }
 }
-
-/* Contenedor del campo de contraseña */
-.password-container {
-    position: relative;
-    display: flex;
-    align-items: center;
-    width: 100%;
-}
-
-/* Campo de contraseña */
-.password-container input {
-    flex: 1;
-    padding-right: 42px; /* deja espacio para el botón */
-}
-
-/* Botón de mostrar/ocultar */
-.show-btn {
-    position: absolute;
-    right: 10px;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    font-size: 18px;
-    color: var(--text-dark);
-    transition: 0.2s ease;
-}
-
-.show-btn:hover {
-    color: var(--btn-dark);
-    transform: scale(1.1);
-}
-
-/* Contenedor del botón dentro del panel */
-
-

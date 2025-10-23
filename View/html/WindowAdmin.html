@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" type="text/css" href="../css/view.css">
+    <title>Window Admin</title>
+  </head>
+  <body>
+    <header>
+      <p>Header Text</p>
+    </header>
+
+    <main>
+      <div id="modify">
+        <div class="form-flex" style="justify-content: space-between;">
+          <h2 style="margin-top:0; margin-bottom:8px; flex:1;">Admin Panel</h2>
+          <h2 style="margin-top:0; margin-bottom:8px; flex:1;">User Data</h2>
+        </div>
+
+        <form action="#" method="post">
+          <div class="form-flex">
+            <!-- Left column: Admin Panel -->
+            <div class="fields" style="flex:1; max-width: 260px;">
+              <div class="field" style="flex-direction: column; align-items: stretch; gap:8px;">
+                <label for="userList" style="text-align:left; width:auto;">User:</label>
+                <select id="userList" name="userList" size="6" style="width:100%; padding:10px 12px; border:0; border-radius:12px; background: var(--bg-input); outline:none; color: var(--text-dark);">
+                  <option value="">&#160;</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Right column: User Data -->
+            <div class="fields" style="flex:1.4;">
+              <div class="field">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+              </div>
+              <div class="field">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+              </div>
+              <div class="field">
+                <label for="surname">Surname:</label>
+                <input type="text" id="surname" name="surname" required>
+              </div>
+              <div class="field">
+                <label for="gmail">Gmail:</label>
+                <input type="email" id="gmail" name="gmail" required>
+              </div>
+              <div class="field">
+                <label for="telephone">Telephone:</label>
+                <input type="tel" id="telephone" name="telephone">
+              </div>
+              <div class="field">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+              </div>
+            </div>
+          </div>
+
+          <div class="actions">
+            <button type="submit" class="btn">Modify</button>
+            <button type="button" class="btn btn-secondary">Delete</button>
+          </div>
+        </form>
+      </div>
+    </main>
+
+    <footer>
+      <p>Footer</p>
+    </footer>
+  </body>
+</html>
