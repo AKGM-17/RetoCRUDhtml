@@ -6,14 +6,14 @@ error_reporting(0);
 
 header('Content-Type: application/json; charset=utf-8');
 
-require_once '../controller/LibroController.php';
+require_once '../controller/ModelController.php';
 
 $Profile_code = $_GET['Profile_code'] ?? '';
 $id = $_GET['id'] ?? '';
 $username = $_GET['username'] ?? '';
 
 try {
-    $controller = new LibroController();
+    $controller = new ModelController();
 
     // If neither id nor Profile_code provided, try resolve by username
     if ($Profile_code === '' && $id === '') {

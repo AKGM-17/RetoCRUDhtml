@@ -6,10 +6,10 @@ error_reporting(0);
 
 header('Content-Type: application/json; charset=utf-8');
 
-require_once '../controller/LibroController.php';
+require_once '../controller/ModelController.php';
 
 try {
-    $controller = new LibroController();
+$controller = new ModelController();
     $users = $controller->listarUsers();
     
 
@@ -18,19 +18,19 @@ try {
     // Normalize output to plain associative arrays
     $out = [];
     if (is_array($users)) {
-        foreach ($users as $p) {
-            $code = $p->getId();
+        foreach ($users as $user) {
+            $code = $user->getId();
             $out[] = [
                 'id' => $code,
                 'Profile_code' => $code,
-                'username' => $p->getUsername(),
-                'name' => $p->getName(),
-                'surname' => $p->getSurname(),
-                'gmail' => $p->getGmail(),
-                'telephone' => $p->getTelephone(),
-                'password' => $p->getPassword(),
-                'card_no' => $p->getCard_no(),
-                'gender' => $p->getGender(),
+                'username' => $user->getUsername(),
+                'name' => $user->getName(),
+                'surname' => $user->getSurname(),
+                'gmail' => $user->getGmail(),
+                'telephone' => $user->getTelephone(),
+                'password' => $user->getPassword(),
+                'card_no' => $user->getCard_no(),
+                'gender' => $user->getGender(),
             ];
         }
     }

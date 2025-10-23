@@ -4,7 +4,7 @@ require_once '../model/UserModel.php';
 require_once '../model/ProfileModel.php';
 
 
-class LibroController {
+class ModelController {
     private $userModel;
     private $profileModel;
 

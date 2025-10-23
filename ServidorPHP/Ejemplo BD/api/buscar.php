@@ -6,7 +6,7 @@
     
     header('Content-Type: application/json; charset=utf-8');
     
-    require_once '../controller/LibroController.php';
+    require_once '../controller/ModelController.php';
     
     $Profile_code = $_GET['Profile_code'] ?? '';
     
@@ -16,7 +16,7 @@
             exit;
         }
     
-        $controller = new LibroController();
+        $controller = new ModelController();
         $profile = $controller->buscarProfile($Profile_code);
         $user = $controller->buscarUser($Profile_code);
     
