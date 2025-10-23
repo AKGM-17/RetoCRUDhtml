@@ -19,10 +19,6 @@ class LibroController {
         }
     }
 
-    public function borrar($isbn) {
-        // Not implemented in provided models
-        return false;
-    }
 
     public function buscarUser($Profile_code) {
         return $this->userModel->buscarPorProfile_Code($Profile_code);
@@ -33,8 +29,34 @@ class LibroController {
         return $this->profileModel->buscarPorId($Profile_code);
     }
 
-    public function listarProfiles() {
-        return $this->profileModel->getAllProfiles();
+    public function listarUsers() {
+        return $this->userModel->getAllUsers();
+    }
+
+    public function buscarProfilePorUsername($username) {
+        return $this->profileModel->buscarPorUsername($username);
+    }
+
+    public function borrarProfilePorUsername($username) {
+        return $this->profileModel->borrarPorUsername($username);
+    }
+
+    public function borrarUsuario($Profile_code = null, $id = null) {
+        $userDeleted = false;
+        $profileDeleted = false;
+        
+        if ($Profile_code !== null && $Profile_code !== '') {
+            try { $userDeleted = $userDeleted || $this->userModel->borrarPorProfile_Code($Profile_code); } catch (Exception $e) {}
+            try { $profileDeleted = $profileDeleted || $this->profileModel->borrarPorId($Profile_code); } catch (Exception $e) {}
+        }
+        if ($id !== null && $id !== '') {
+            try { $userDeleted = $userDeleted || $this->userModel->borrarPorProfile_Code($id); } catch (Exception $e) {}
+            try { $profileDeleted = $profileDeleted || $this->profileModel->borrarPorId($id); } catch (Exception $e) {}
+        }
+        return [
+            'user_deleted' => $userDeleted,
+            'profile_deleted' => $profileDeleted
+        ];
     }
 }
 ?>

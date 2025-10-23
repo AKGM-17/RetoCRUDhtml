@@ -10,20 +10,27 @@ require_once '../controller/LibroController.php';
 
 try {
     $controller = new LibroController();
-    $profiles = $controller->listarProfiles();
+    $users = $controller->listarUsers();
+    
+
+    
 
     // Normalize output to plain associative arrays
     $out = [];
-    if (is_array($profiles)) {
-        foreach ($profiles as $p) {
+    if (is_array($users)) {
+        foreach ($users as $p) {
+            $code = $p->getId();
             $out[] = [
-                'id' => $p->getId(),
+                'id' => $code,
+                'Profile_code' => $code,
                 'username' => $p->getUsername(),
                 'name' => $p->getName(),
                 'surname' => $p->getSurname(),
                 'gmail' => $p->getGmail(),
                 'telephone' => $p->getTelephone(),
                 'password' => $p->getPassword(),
+                'card_no' => $p->getCard_no(),
+                'gender' => $p->getGender(),
             ];
         }
     }

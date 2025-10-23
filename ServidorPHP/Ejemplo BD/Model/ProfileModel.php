@@ -12,8 +12,8 @@ class ProfileModel {
     }
 
     public function buscarPorId($id) {
-        // Use Profile_code as identifier if that's the primary key
-        $query = "SELECT * FROM Profile_ WHERE Profile_code = :id OR id = :id";
+        // Use user_code as identifier, the primary key in Profile_
+        $query = "SELECT * FROM Profile_ WHERE user_code = :id";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':id', $id);
         $stmt->execute();
@@ -34,7 +34,7 @@ class ProfileModel {
     }
 
     public function borrarPorId($id) {
-        $query = "DELETE FROM Profile_ WHERE id = :id";
+        $query = "DELETE FROM Profile_ WHERE Profile_code = :id OR id = :id";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':id', $id);
 
@@ -42,6 +42,26 @@ class ProfileModel {
             return $stmt->rowCount() > 0; // Return true if at least one row was deleted
         }
         return false;
+    }
+
+    public function buscarPorUsername($username) {
+        $query = "SELECT * FROM Profile_ WHERE user_name = :username";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':username', $username);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($result) {
+            $pid = $result['Profile_code'] ?? $result['profile_Code'] ?? $result['profile_code'] ?? ($result['id'] ?? null);
+            $username = $result['user_name'] ?? $result['Username'] ?? null;
+            $name = $result['name_'] ?? $result['Name'] ?? null;
+            $surname = $result['surname'] ?? $result['Surname'] ?? null;
+            $gmail = $result['email'] ?? $result['Email'] ?? null;
+            $telephone = $result['telephone'] ?? $result['Telephone'] ?? null;
+            $password = $result['passwd'] ?? $result['Password'] ?? null;
+            return new Profile($pid, $username, $name, $surname, $gmail, $telephone, $password);
+        }
+        return null;
     }
 
     public function getAllProfiles() {

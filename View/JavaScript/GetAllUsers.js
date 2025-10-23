@@ -6,21 +6,26 @@ document.addEventListener("DOMContentLoaded", function() {
     const gmail = document.getElementById("gmail");
     const telephone = document.getElementById("telephone");
     const password = document.getElementById("password");
-    const modifyButton = document.querySelector("button[type='submit']");
-    const deleteButton = document.querySelector("button[type='button']");
+    const card_no = document.getElementById("card_no");
+    const gender = document.getElementById("gender");
 
     function buildUserOption(u) {
         const option = document.createElement("option");
-        const id = u.id || u.Profile_code || u.profile_code || u.card_no || "";
-        const display = u.username || u.name || u.surname || u.gmail || id || "";
-        option.value = id;
+        const profileCode = u.Profile_code || u.profile_Code || u.profile_code || "";
+        const id = u.id || profileCode || u.card_no || "";
+        const display = u.username || u.name || u.surname || u.gmail || profileCode || id || "";
+        option.value = profileCode || id || u.username || u.name || "";
         option.textContent = display;
+        option.dataset.id = id || "";
+        option.dataset.profileCode = profileCode || "";
         option.dataset.username = u.username || "";
         option.dataset.name = u.name || "";
         option.dataset.surname = u.surname || "";
         option.dataset.gmail = u.gmail || "";
         option.dataset.telephone = u.telephone || "";
         option.dataset.password = u.password || "";
+        option.dataset.card_no = u.card_no || "";
+        option.dataset.gender = u.gender || "";
         return option;
     }
 
@@ -42,6 +47,8 @@ document.addEventListener("DOMContentLoaded", function() {
         gmail.value = opt.dataset.gmail || "";
         telephone.value = opt.dataset.telephone || "";
         password.value = opt.dataset.password || "";
+        card_no.value = opt.dataset.card_no || "";
+        gender.value = opt.dataset.gender || "";
     }
 
     userList.addEventListener("change", function() {
@@ -49,7 +56,7 @@ document.addEventListener("DOMContentLoaded", function() {
         fillFormFromOption(opt);
     });
 
-    fetch("../../ServidorPHP/Ejemplo%20BD/api/listar_perfiles.php")
+    fetch("../../ServidorPHP/Ejemplo%20BD/api/listar_User.php")
         .then(response => response.text())
         .then(text => {
             let users = [];

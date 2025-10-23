@@ -12,17 +12,41 @@ class UserModel {
     }
 
     public function buscarPorProfile_Code($Profile_code) {
-        $query = "SELECT * FROM User_ WHERE Profile_code = :Profile_code";
+        $query = "
+            SELECT 
+                p.user_code AS profile_code,
+                p.user_code AS pid,
+                p.user_name AS username,
+                p.name_ AS name,
+                p.Surname AS surname,
+                p.email AS email,
+                p.Telephone AS telephone,
+                p.passwd AS password,
+                u.card_no AS card_no,
+                u.gender AS gender
+            FROM User_ u
+            JOIN Profile_ p ON p.user_code = u.Profile_code
+            WHERE u.Profile_code = :Profile_code
+        ";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':Profile_code', $Profile_code);
         $stmt->execute();
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if ($result) {
-            return new User($result['profile_Code'], $result['card_no'], $result['gender']);
-        } else {
-            return null;
+        if ($row) {
+            $pid = $row['pid'] ?? null;
+            $username = $row['username'] ?? null;
+            $name = $row['name'] ?? null;
+            $surname = $row['surname'] ?? null;
+            $email = $row['email'] ?? null;
+            $telephone = $row['telephone'] ?? null;
+            $password = $row['password'] ?? null;
+            $profileCode = $row['profile_code'] ?? $Profile_code;
+            $card_no = $row['card_no'] ?? null;
+            $gender = $row['gender'] ?? null;
+            return new User($pid, $username, $name, $surname, $email, $telephone, $password, $profileCode, $card_no, $gender);
         }
+        return null;
     }
 
     public function borrarPorProfile_Code($Profile_code) {
@@ -37,14 +61,38 @@ class UserModel {
     }
 
     public function getAllUsers() {
-        $query = "SELECT * FROM User_";
+        $query = "
+            SELECT 
+                p.user_code AS profile_code,
+                p.user_code AS pid,
+                p.user_name AS username,
+                p.name_ AS name,
+                p.Surname AS surname,
+                p.email AS email,
+                p.Telephone AS telephone,
+                p.passwd AS password,
+                u.card_no AS card_no,
+                u.gender AS gender
+            FROM User_ u
+            JOIN Profile_ p ON p.user_code = u.Profile_code
+        ";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
-        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         $users = [];
-        foreach ($result as $row) {
-            $users[] = new User($row['Profile_code'], $row['card_no'], $row['gender']);
+        foreach ($rows as $row) {
+            $pid = $row['pid'] ?? null;
+            $username = $row['username'] ?? null;
+            $name = $row['name'] ?? null;
+            $surname = $row['surname'] ?? null;
+            $email = $row['email'] ?? null;
+            $telephone = $row['telephone'] ?? null;
+            $password = $row['password'] ?? null;
+            $profileCode = $row['profile_code'] ?? null;
+            $card_no = $row['card_no'] ?? null;
+            $gender = $row['gender'] ?? null;
+            $users[] = new User($pid, $username, $name, $surname, $email, $telephone, $password, $profileCode, $card_no, $gender);
         }
         return $users;
     }
