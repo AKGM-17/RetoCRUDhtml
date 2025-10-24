@@ -58,5 +58,31 @@ class ModelController {
             'profile_deleted' => $profileDeleted
         ];
     }
+
+    public function modificarUsuario($profile, $user = null) {
+        $profileUpdated = false;
+        $userUpdated = false;
+
+        if ($profile !== null) {
+            try {
+                $profileUpdated = $this->profileModel->actualizarProfile($profile);
+            } catch (Exception $e) {
+                // Profile update failed
+            }
+        }
+
+        if ($user !== null) {
+            try {
+                $userUpdated = $this->userModel->actualizarUser($user);
+            } catch (Exception $e) {
+                // User update failed
+            }
+        }
+
+        return [
+            'profile_updated' => $profileUpdated,
+            'user_updated' => $userUpdated
+        ];
+    }
 }
 ?>

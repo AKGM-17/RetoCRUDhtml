@@ -16,17 +16,18 @@ class ProfileModel {
         $query = "SELECT * FROM Profile_ WHERE user_code = :id";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':id', $id);
+
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($result) {
-            $pid = $result['Profile_code'] ?? $result['profile_Code'] ?? $result['profile_code'] ?? ($result['id'] ?? null);
-            $username = $result['user_name'] ?? $result['Username'] ?? null;
-            $name = $result['name'] ?? $result['Name'] ?? null;
-            $surname = $result['surname'] ?? $result['Surname'] ?? null;
-            $gmail = $result['email'] ?? $result['Email'] ?? null;
-            $telephone = $result['telephone'] ?? $result['Telephone'] ?? null;
-            $password = $result['passwd'] ?? $result['Password'] ?? null;
+            $pid = $result['user_code']; // El campo de clave primaria es user_code
+            $username = $result['user_name'] ?? null;
+            $name = $result['name_'] ?? null;
+            $surname = $result['Surname'] ?? null;
+            $gmail = $result['email'] ?? null;
+            $telephone = $result['Telephone'] ?? null;
+            $password = $result['passwd'] ?? null;
             return new Profile($pid, $username, $name, $surname, $gmail, $telephone, $password);
         } else {
             return null;
@@ -34,7 +35,7 @@ class ProfileModel {
     }
 
     public function borrarPorId($id) {
-        $query = "DELETE FROM Profile_ WHERE Profile_code = :id OR id = :id";
+        $query = "DELETE FROM Profile_ WHERE user_code = :id";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':id', $id);
 
@@ -52,13 +53,13 @@ class ProfileModel {
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($result) {
-            $pid = $result['Profile_code'] ?? $result['profile_Code'] ?? $result['profile_code'] ?? ($result['id'] ?? null);
-            $username = $result['user_name'] ?? $result['Username'] ?? null;
-            $name = $result['name_'] ?? $result['Name'] ?? null;
-            $surname = $result['surname'] ?? $result['Surname'] ?? null;
-            $gmail = $result['email'] ?? $result['Email'] ?? null;
-            $telephone = $result['telephone'] ?? $result['Telephone'] ?? null;
-            $password = $result['passwd'] ?? $result['Password'] ?? null;
+            $pid = $result['user_code']; // El campo de clave primaria es user_code
+            $username = $result['user_name'] ?? null;
+            $name = $result['name_'] ?? null;
+            $surname = $result['Surname'] ?? null;
+            $gmail = $result['email'] ?? null;
+            $telephone = $result['Telephone'] ?? null;
+            $password = $result['passwd'] ?? null;
             return new Profile($pid, $username, $name, $surname, $gmail, $telephone, $password);
         }
         return null;
@@ -72,16 +73,43 @@ class ProfileModel {
 
         $profiles = [];
         foreach ($result as $row) {
-            $pid = $row['Profile_code'] ?? $row['profile_Code'] ?? $row['profile_code'] ?? ($row['id'] ?? null);
-            $username = $row['user_name'] ?? $row['Username'] ?? null;
-            $name = $row['name_'] ?? $row['name'] ?? null;
-            $surname = $row['Surname'] ?? $row['Surname'] ?? null;
-            $gmail = $row['email'] ?? $row['Email'] ?? null;
-            $telephone = $row['Telephone'] ?? $row['Telephone'] ?? null;
-            $password = $row['passwd'] ?? $row['Password'] ?? null;
+            $pid = $row['user_code']; // El campo de clave primaria es user_code
+            $username = $row['user_name'] ?? null;
+            $name = $row['name_'] ?? null;
+            $surname = $row['Surname'] ?? null;
+            $gmail = $row['email'] ?? null;
+            $telephone = $row['Telephone'] ?? null;
+            $password = $row['passwd'] ?? null;
             $profiles[] = new Profile($pid, $username, $name, $surname, $gmail, $telephone, $password);
         }
         return $profiles;
+    }
+
+    public function actualizarProfile($profile) {
+        $query = "UPDATE Profile_ SET user_name = :username, passwd = :password, email = :email, name_ = :name, Surname = :surname, Telephone = :telephone WHERE user_code = :id";
+        $stmt = $this->conn->prepare($query);
+
+        // Crear variables temporales para evitar errores de referencia
+        $id = $profile->getId();
+        $username = $profile->getUsername();
+        $password = $profile->getPassword();
+        $email = $profile->getGmail();
+        $name = $profile->getName();
+        $surname = $profile->getSurname();
+        $telephone = $profile->getTelephone();
+
+        $stmt->bindParam(':id', $id);
+        $stmt->bindParam(':username', $username);
+        $stmt->bindParam(':password', $password);
+        $stmt->bindParam(':email', $email);
+        $stmt->bindParam(':name', $name);
+        $stmt->bindParam(':surname', $surname);
+        $stmt->bindParam(':telephone', $telephone);
+
+        if ($stmt->execute()) {
+            return $stmt->rowCount() > 0;
+        }
+        return false;
     }
 }
 ?>

@@ -12,9 +12,6 @@ try {
 $controller = new ModelController();
     $users = $controller->listarUsers();
     
-
-    
-
     // Normalize output to plain associative arrays
     $out = [];
     if (is_array($users)) {

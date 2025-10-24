@@ -16,13 +16,15 @@ class User extends Profile {
     public function getProfileCode() { return $this->profileCode; }
     public function getCard_no() { return $this->card_no; }
     public function getGender() { return $this->gender; }
-
     public function getUsername() { return parent::getUsername(); }
     public function getName() { return parent::getName(); }
     public function getSurname() { return parent::getSurname(); }
     public function getGmail() { return parent::getGmail(); }
     public function getTelephone() { return parent::getTelephone(); }
     public function getPassword() { return parent::getPassword(); }
+    public function setProfileCode($profileCode) { $this->profileCode = $profileCode; }
+    public function setCard_no($card_no) { $this->card_no = $card_no; }
+    public function setGender($gender) { $this->gender = $gender; }
 
     public function mostrar() {
         return "[$this->profileCode] $this->card_no - $this->gender";

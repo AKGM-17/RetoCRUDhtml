@@ -13,7 +13,7 @@ class UserModel {
 
     public function buscarPorProfile_Code($Profile_code) {
         $query = "
-            SELECT 
+            SELECT
                 p.user_code AS profile_code,
                 p.user_code AS pid,
                 p.user_name AS username,
@@ -30,6 +30,7 @@ class UserModel {
         ";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':Profile_code', $Profile_code);
+
         $stmt->execute();
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -95,6 +96,25 @@ class UserModel {
             $users[] = new User($pid, $username, $name, $surname, $email, $telephone, $password, $profileCode, $card_no, $gender);
         }
         return $users;
+    }
+
+    public function actualizarUser($user) {
+        $query = "UPDATE User_ SET card_no = :card_no, gender = :gender WHERE Profile_code = :profile_code";
+        $stmt = $this->conn->prepare($query);
+
+        // Crear variables temporales para evitar errores de referencia
+        $profileCode = $user->getProfileCode();
+        $cardNo = $user->getCard_no();
+        $gender = $user->getGender();
+
+        $stmt->bindParam(':profile_code', $profileCode);
+        $stmt->bindParam(':card_no', $cardNo);
+        $stmt->bindParam(':gender', $gender);
+
+        if ($stmt->execute()) {
+            return $stmt->rowCount() > 0;
+        }
+        return false;
     }
 }
 ?>
