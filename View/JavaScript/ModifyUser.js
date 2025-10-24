@@ -21,6 +21,77 @@ document.addEventListener("DOMContentLoaded", function() {
         if (gender) gender.value = "";
     }
 
+    function reloadUserListAndUpdateForm(profileCode) {
+        fetch("../../ServidorPHP/Ejemplo%20BD/api/listar_User.php")
+            .then(response => response.text())
+            .then(text => {
+                let users = [];
+                try {
+                    const data = JSON.parse(text);
+                    if (data && data.error) {
+                        console.error(data.error);
+                        return;
+                    }
+                    if (Array.isArray(data)) {
+                        users = data;
+                    } else if (Array.isArray(data.users)) {
+                        users = data.users;
+                    } else if (data) {
+                        users = [data];
+                    }
+                } catch (_) {
+                    // Handle concatenated JSON objects from API
+                    const parts = text
+                        .replace(/}\s*{/g, '}|||{')
+                        .split('|||')
+                        .map(t => { try { return JSON.parse(t); } catch { return null; } })
+                        .filter(Boolean);
+                    users = parts;
+                }
+
+                // Update the user list
+                userList.innerHTML = "";
+                let selectedOption = null;
+                users.forEach(u => {
+                    const option = createUserOption(u);
+                    userList.appendChild(option);
+
+                    // Find the updated user
+                    const userProfileCode = u.Profile_code || u.profile_Code || u.profile_code || u.id || "";
+                    if (userProfileCode.toString() === profileCode.toString()) {
+                        selectedOption = option;
+                    }
+                });
+
+                // Select the updated user and fill form
+                if (selectedOption) {
+                    userList.value = selectedOption.value;
+                    fillFormFromOption(selectedOption);
+                }
+            })
+            .catch(error => console.error("Error reloading users:", error));
+    }
+
+    function createUserOption(u) {
+        const option = document.createElement("option");
+        const profileCode = u.Profile_code || u.profile_Code || u.profile_code || "";
+        const id = u.id || profileCode || u.card_no || "";
+        const display = u.username || u.name || u.surname || u.gmail || profileCode || id || "";
+        option.value = profileCode || id || u.username || u.name || "";
+        option.textContent = display;
+        option.dataset.id = id || "";
+        option.dataset.profileCode = profileCode || "";
+        option.dataset.username = u.username || "";
+        option.dataset.name = u.name || "";
+        option.dataset.surname = u.surname || "";
+        option.dataset.gmail = u.gmail || "";
+        option.dataset.telephone = u.telephone || "";
+        option.dataset.password = u.password || "";
+        option.dataset.card_no = u.card_no || "";
+        option.dataset.gender = u.gender || "";
+        return option;
+    }
+
     function collectFormData() {
         const selected = userList ? userList.options[userList.selectedIndex] : null;
         const profileCode = selected ? (selected.dataset.profileCode || selected.value || selected.dataset.id) : "";
@@ -45,6 +116,26 @@ document.addEventListener("DOMContentLoaded", function() {
         if (gender && gender.value.trim() !== "") formData.gender = gender.value.trim();
 
         return formData;
+    }
+
+    function fillFormFromOption(opt) {
+        if (!opt) return;
+        username.value = opt.dataset.username || "";
+        name.value = opt.dataset.name || "";
+        surname.value = opt.dataset.surname || "";
+        gmail.value = opt.dataset.gmail || "";
+        telephone.value = opt.dataset.telephone || "";
+        password.value = opt.dataset.password || "";
+        card_no.value = opt.dataset.card_no || "";
+        gender.value = opt.dataset.gender || "";
+    }
+
+    // Event listener para cuando cambie la selección del dropdown
+    if (userList) {
+        userList.addEventListener("change", function() {
+            const opt = userList.options[userList.selectedIndex];
+            fillFormFromOption(opt);
+        });
     }
 
     if (modifyForm) {
@@ -83,10 +174,9 @@ document.addEventListener("DOMContentLoaded", function() {
 
                     if (data && data.ok) {
                         alert("Usuario modificado correctamente");
-                        // Trigger change to refill form with updated data
-                        if (userList) {
-                            userList.dispatchEvent(new Event("change"));
-                        }
+                        // Reload user list and update form with fresh data
+                        const currentProfileCode = formData.Profile_code;
+                        reloadUserListAndUpdateForm(currentProfileCode);
                     } else {
                         alert((data && data.error) || "No se pudo modificar el usuario");
                     }
