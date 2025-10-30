@@ -95,14 +95,21 @@ document.addEventListener("DOMContentLoaded", function() {
     function collectFormData() {
         const selected = userList ? userList.options[userList.selectedIndex] : null;
         const profileCode = selected ? (selected.dataset.profileCode || selected.value || selected.dataset.id) : "";
-
+        const userData = localStorage.getItem('currentUser') ? JSON.parse(localStorage.getItem('currentUser')) : null;
+        const profile = userData ? userData.profile || {} : {};
+        const user = userData ? userData.user || {} : {};
+        const localStorageProfileCode = profile.id || user.id || "";
+        
         if (!profileCode) {
             alert("Selecciona un usuario para modificar.");
-            return null;
+    
+        }else if(!localStorageProfileCode){
+            alert("No hay un usuario logueado.");
+            return;
         }
-
+        
         const formData = {
-            Profile_code: profileCode
+            Profile_code: profileCode || localStorageProfileCode
         };
 
         // Incluir solo los campos que no estén vacíos

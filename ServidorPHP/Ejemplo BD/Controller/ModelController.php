@@ -119,7 +119,8 @@ class ModelController {
                     'name' => $profile->getName(),
                     'surname' => $profile->getSurname(),
                     'gmail' => $profile->getGmail(),
-                    'telephone' => $profile->getTelephone()
+                    'telephone' => $profile->getTelephone(),
+                    'passwd' => $profile->getPassword()
                 ],
                 'user' => $user ? [
                     'profile_code' => $user->getProfileCode(),
