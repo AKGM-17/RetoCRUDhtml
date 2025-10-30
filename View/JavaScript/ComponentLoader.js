@@ -2,14 +2,19 @@
  * Component Loader - Carga navbar y footer dinámicamente
  * Layout estático con detección de usuario
  */
+console.log("🎯 ComponentLoader.js - ARCHIVO CARGADO");
 
+// Verificar que la clase se define
+console.log("🔧 Definiendo clase ComponentLoader...");
 class ComponentLoader {
     constructor() {
+         console.log("🚀 ComponentLoader - CONSTRUCTOR ejecutado");
         this.init();
     }
 
     init() {
         document.addEventListener('DOMContentLoaded', () => {
+            console.log("📄 DOM completamente cargado");
             this.loadNavbar();
             this.loadFooter();
             this.highlightActiveNav();
@@ -17,16 +22,29 @@ class ComponentLoader {
     }
 
     async loadNavbar() {
-        // Detectar usuario desde localStorage
-        const usuario = JSON.parse(localStorage.getItem('usuarioLogueado') || 'null');
-        let navbarUrl = 'navbar.html'; // Por defecto
-
-       if(window.location.pathname.includes('LogIn.html')){
-           return;
-       }
-        if (usuario) {
+    // CORREGIR: No hacer doble parse
+    const usuarioJSON = localStorage.getItem('currentUser');
+    let navbarUrl = 'navbar.html'; // Por defecto
+    
+    
+    if (usuarioJSON) {
+        try {
+            const usuario = JSON.parse(usuarioJSON); // Solo un parse aquí
+            console.log('🔍 Usuario encontrado:', usuario);
+            
             // Elegir navbar según tipo de usuario
-            switch (usuario.tipo) {
+            // Si no existe 'type', usar 'is_admin' como fallback
+            let userType = usuario.type;
+            
+            // Si no hay 'type', determinar basado en 'is_admin'
+            if (!userType) {
+                userType = usuario.is_admin ? 'admin' : 'user';
+                console.log('🎯 Tipo determinado por is_admin:', userType);
+            }
+            
+            console.log('🎯 Tipo de usuario final:', userType);
+            
+            switch (userType.toLowerCase()) {
                 case 'admin':
                 case 'administrador':
                     navbarUrl = 'navbar_admin.html';
@@ -35,29 +53,41 @@ class ComponentLoader {
                 case 'usuario':
                     navbarUrl = 'navbar_user.html';
                     break;
+                default:
+                    console.warn('⚠️ Tipo de usuario no reconocido:', userType);
+                    navbarUrl = 'navbar.html';
             }
-        } else {
-            // Sin usuario: header simple
-            this.loadSimpleHeader();
+            
+        } catch (error) {
+            console.error('❌ Error parseando usuario:', error);
+            this.loadDefaultNavbar();
             return;
         }
-
-        try {
-            const response = await fetch(navbarUrl);
-            if (!response.ok) throw new Error(`HTTP ${response.status}`);
-
-            const html = await response.text();
-            const header = document.getElementById('header');
-
-            if (header) {
-                header.innerHTML = html;
-                this.addNavbarFunctionality();
-            }
-        } catch (error) {
-            console.error('Error cargando navbar:', error);
-            this.loadDefaultNavbar();
-        }
+    } else {
+        console.log('👤 No hay usuario en localStorage');
+        // Sin usuario: header simple
+        this.loadSimpleHeader();
+        return;
     }
+
+    console.log('📄 Cargando navbar:', navbarUrl);
+    
+    try {
+        const response = await fetch(navbarUrl);
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
+        const html = await response.text();
+        const header = document.getElementById('header');
+
+        if (header) {
+            header.innerHTML = html;
+            this.addNavbarFunctionality();
+        }
+    } catch (error) {
+        console.error('❌ Error cargando navbar:', error);
+        this.loadDefaultNavbar();
+    }
+}
 
     async loadSimpleHeader() {
         const header = document.getElementById('header');
@@ -133,7 +163,7 @@ class ComponentLoader {
     }
 
     logout() {
-        localStorage.removeItem('usuarioLogueado');
+        localStorage.removeItem('currentUser'); // Cambiar de 'usuarioLogueado' a 'currentUser'
         window.location.href = 'LogIn.html';
     }
 
