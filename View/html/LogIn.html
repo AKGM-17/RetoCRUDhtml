@@ -1,29 +1,32 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="stylesheet" type="text/css" href="../css/view.css">
-        <title>Log In</title>
-    </head>
-    <body>
-        <header id="header">
-            <!-- Navbar se cargará dinámicamente -->
-        </header>
-        <main>
-            <div id="modify">
-                <form>
-                    <Label>User</Label><input type="text" id="username" name="username"/><br/><br/>
-                    <Label>Password</Label><input type="password" id="password" name="password" /><br/><br/>
-                    <button class="btn" id="logIn">Log In</button> <button class="btn">Sign Up</button>
-                </form>
-            </div>
-        </main>
-        <footer id="footer">
-            <!-- Footer se cargará dinámicamente -->
-        </footer>
 
-        <script src="../JavaScript/ComponentLoader.js" async></script>
-        <script src="../JavaScript/Login.js" defer></script>
-    </body>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" type="text/css" href="../css/view.css">
+    <title>Log In</title>
+</head>
+
+<body>
+    <header id="header">
+        <!-- Navbar se cargará dinámicamente -->
+    </header>
+    <main>
+        <div id="modify">
+            <form>
+                <Label>User</Label><input type="text" id="username" name="username" /><br /><br />
+                <Label>Password</Label><input type="password" id="password" name="password" /><br /><br />
+                <button class="btn" id="logIn">Log In</button> <button class="btn" href="SignUp.html">Sign Up</button>
+            </form>
+        </div>
+    </main>
+    <footer id="footer">
+        <!-- Footer se cargará dinámicamente -->
+    </footer>
+
+    <script src="../JavaScript/ComponentLoader.js" async></script>
+    <script src="../JavaScript/Login.js" defer></script>
+</body>
+
 </html>

@@ -69,40 +69,5 @@ class AdminModel {
         }
         return false;
     }
-
-    public function getAllAdmins() {
-        $query = "
-            SELECT
-                a.Profile_code AS profile_code,
-                a.Current_account AS current_account,
-                p.user_name AS username,
-                p.name_ AS name,
-                p.Surname AS surname,
-                p.email AS gmail,
-                p.Telephone AS telephone,
-                p.passwd AS password
-            FROM Admin_ a
-            JOIN Profile_ p ON p.user_code = a.Profile_code
-        ";
-        $stmt = $this->conn->prepare($query);
-        $stmt->execute();
-        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-        $admins = [];
-        foreach ($rows as $row) {
-            $admins[] = new Admin(
-                $row['profile_code'],
-                $row['username'],
-                $row['name'],
-                $row['surname'],
-                $row['gmail'],
-                $row['telephone'],
-                $row['password'],
-                $row['profile_code'],
-                $row['current_account']
-            );
-        }
-        return $admins;
-    }
 }
 ?>

@@ -32,6 +32,10 @@ class ModelController {
         return $this->profileModel->buscarPorId($Profile_code);
     }
 
+    public function buscarAdmin($Profile_code) {
+        return $this->adminModel->buscarPorProfileCode($Profile_code);
+    }
+
     public function listarUsers() {
         return $this->userModel->getAllUsers();
     }
@@ -62,7 +66,7 @@ class ModelController {
         ];
     }
 
-    public function modificarUsuario($profile, $user = null) {
+    public function modificarUsuario($profile, $user) {
         $profileUpdated = false;
         $userUpdated = false;
 
@@ -81,9 +85,10 @@ class ModelController {
                 // User update failed
             }
         }
+
         return [
             'profile_updated' => $profileUpdated,
-            'user_updated' => $userUpdated
+            'user_updated' => $userUpdated,
         ];
     }
 
@@ -99,11 +104,18 @@ class ModelController {
         if ($profile) {
             // Si la autenticación es exitosa, buscar también en User_ si existe
             $user = null;
+            $admin = null;
             try {
                 $userResult = $this->userModel->buscarPorProfile_Code($profile->getId());
                 error_log("User result: " . ($userResult ? "FOUND" : "NOT FOUND"));
                 if ($userResult !== null) {
                     $user = $userResult;
+                } else {
+                    $adminResult = $this->adminModel->buscarPorProfileCode($profile->getId());
+                    if($adminResult !== null) {
+                        $admin = $adminResult;
+                    }
+                    
                 }
             } catch (Exception $e) {
                 error_log("User search error: " . $e->getMessage());
@@ -128,6 +140,7 @@ class ModelController {
                     'gender' => $user->getGender()
                 ] : null,
                 'is_admin' => $this->esAdmin($profile->getUsername())
+    
             ];
         }
 

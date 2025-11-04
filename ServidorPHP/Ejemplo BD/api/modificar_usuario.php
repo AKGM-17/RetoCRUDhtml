@@ -1,4 +1,11 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+ini_set('log_errors', 1);
+ini_set('error_log', 'C:\xampp\htdocs\RetoCrudHtml\php_errors.log');
+
 header('Content-Type: application/json; charset=utf-8');
 
 require_once '../controller/ModelController.php';
@@ -13,6 +20,7 @@ $password = $_POST['password'] ?? $_GET['password'] ?? '';
 $card_no = $_POST['card_no'] ?? $_GET['card_no'] ?? '';
 $gender = $_POST['gender'] ?? $_GET['gender'] ?? '';
 
+
 try {
     if ($Profile_code === '') {
         echo json_encode(['error' => 'Profile_code requerido']);
@@ -24,6 +32,7 @@ try {
     // Buscar el usuario actual para obtener los datos existentes
     $currentProfile = $controller->buscarProfile($Profile_code);
     $currentUser = $controller->buscarUser($Profile_code);
+    
 
     if (!$currentProfile) {
         echo json_encode(['error' => 'Usuario no encontrado', 'debug' => 'Profile_code: ' . $Profile_code]);
@@ -33,6 +42,7 @@ try {
     // Check if we have any fields to update
     $hasProfileFields = $username !== '' || $name !== '' || $surname !== '' || $gmail !== '' || $telephone !== '' || $password !== '';
     $hasUserFields = $card_no !== '' || $gender !== '';
+    
 
     // Si no hay campos para actualizar, devolver error
     if (!$hasProfileFields && !$hasUserFields) {
@@ -62,6 +72,7 @@ try {
     if ($telephone !== '') $currentProfile->setTelephone($telephone);
     if ($password !== '') $currentProfile->setPassword($password);
 
+
     // Si hay datos de User para actualizar
     $userToUpdate = null;
     if ($currentUser) {
@@ -69,6 +80,8 @@ try {
         if ($card_no !== '') $userToUpdate->setCard_no($card_no);
         if ($gender !== '') $userToUpdate->setGender($gender);
     }
+
+    
 
     // Ejecutar la actualización
     $result = $controller->modificarUsuario($currentProfile, $userToUpdate);
@@ -81,7 +94,7 @@ try {
     echo json_encode([
         'ok' => true,
         'profile_updated' => $result['profile_updated'],
-        'user_updated' => $result['user_updated']
+        'user_updated' => $result['user_updated'],
     ], JSON_UNESCAPED_UNICODE);
 } catch (Exception $e) {
     echo json_encode(['error' => 'Error interno del servidor']);

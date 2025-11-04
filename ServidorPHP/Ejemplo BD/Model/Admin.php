@@ -14,6 +14,8 @@ class Admin extends Profile {
     public function getProfileCode() { return $this->profileCode; }
     public function getCurrent_account() { return $this->current_account; }
 
+    public function setCurrent_account($current_account) { $this->current_account = $current_account; }
+
     public function getUsername() { return parent::getUsername(); }
     public function getName() { return parent::getName(); }
     public function getSurname() { return parent::getSurname(); }

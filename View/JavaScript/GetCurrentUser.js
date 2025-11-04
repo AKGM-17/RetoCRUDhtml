@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const password = document.getElementById("password");
     const card_no = document.getElementById("card_no");
     const gender = document.getElementById("gender");
+    let currentAccount = document.getElementById("currentAccount");
 
 
     function fillFormFromCurrentUser() {
@@ -16,26 +17,22 @@ document.addEventListener("DOMContentLoaded", function () {
             const userData = JSON.parse(currentUserData);
 
             // Los datos están en userData.profile y userData.user
-            const profile = userData.profile || {};
-            const user = userData.user || {};
+            const profile = userData.profile || userData || {};
+            const user = userData.user || userData || {};
             
             console.log("Datos del perfil:", profile);
             console.log("Datos del usuario:", user);
             
             // Llenar el formulario con los datos REALES
             // Del perfil (profile)
-            username.value = profile.username || "";
-            name.value = profile.name || "";
-            surname.value = profile.surname || "";
-            gmail.value = profile.gmail || "";
-            telephone.value = profile.telephone || "";
-            password.value = profile.passwd || "";
-            
-            // Del usuario (user)
-            card_no.value = user.card_no || "";
-            gender.value = user.gender || "";
-            
-            console.log("✅ Formulario llenado correctamente");
+            username.value = profile.username || profile.user_name || profile.userName || "";
+            name.value = profile.name || profile.name_ || profile.firstName || "";
+            surname.value = profile.surname || profile.Surname || profile.lastName || "";
+            gmail.value = profile.gmail || profile.email || profile.Email || "";
+            telephone.value = profile.telephone || profile.Telephone || profile.phone || "";
+            password.value = profile.password || profile.passwd || profile.pass || "";
+            card_no.value = user.card_no || user.cardNumber || user.card || "";
+            gender.value = user.gender || user.gender_ || user.sexo || "";
             
         } catch (error) {
             console.error("Error al parsear datos del usuario:", error);

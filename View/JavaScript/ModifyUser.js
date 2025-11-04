@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
     const userList = document.getElementById("userList");
     const username = document.getElementById("username");
     const name = document.getElementById("name");
@@ -6,21 +6,54 @@ document.addEventListener("DOMContentLoaded", function() {
     const gmail = document.getElementById("gmail");
     const telephone = document.getElementById("telephone");
     const password = document.getElementById("password");
-    const card_no = document.getElementById("card_no");
-    const gender = document.getElementById("gender");
+    let card_no = document.getElementById("card_no");
+    let gender = document.getElementById("gender");
+    let currentAccount = document.getElementById("currentAccount");
     const modifyForm = document.querySelector("form");
 
-    function clearForm() {
-        if (username) username.value = "";
-        if (name) name.value = "";
-        if (surname) surname.value = "";
-        if (gmail) gmail.value = "";
-        if (telephone) telephone.value = "";
-        if (password) password.value = "";
-        if (card_no) card_no.value = "";
-        if (gender) gender.value = "";
+    function saveUserToLocalStorage(userData, isAdmin) {
+        if (!userData) {
+            console.error("❌ No se proporcionaron datos para guardar");
+            return;
+        }
+
+        console.log("💾 Guardando en localStorage...");
+        console.log("Datos recibidos:", userData);
+        console.log("Es admin:", isAdmin);
+
+        let userToSave;
+
+        if (isAdmin) {
+            userToSave = {
+                type: "admin",
+                profile: userData.profile || userData,
+                admin: userData.admin || userData.user || {},
+                is_admin: true
+            };
+        } else {
+            userToSave = {
+                type: "user",
+                profile: userData.profile || userData,
+                user: userData.user || userData.admin || {},
+                is_admin: false
+            };
+        }
+
+        console.log("📦 Objeto a guardar:", userToSave);
+
+        try {
+            localStorage.setItem('currentUser', JSON.stringify(userToSave));
+            console.log("✅ Usuario guardado en localStorage correctamente");
+
+            // Verificar que se guardó
+            const verified = localStorage.getItem('currentUser');
+            console.log("🔍 Verificación:", verified ? "✅ Guardado" : "❌ No guardado");
+        } catch (error) {
+            console.error("❌ Error guardando en localStorage:", error);
+        }
     }
 
+    //Funcion para cargar la lista de usuarios y actualizar el formulario en ModifyViewAdmin.html
     function reloadUserListAndUpdateForm(profileCode) {
         fetch("../../ServidorPHP/Ejemplo%20BD/api/listar_User.php")
             .then(response => response.text())
@@ -68,6 +101,8 @@ document.addEventListener("DOMContentLoaded", function() {
                     userList.value = selectedOption.value;
                     fillFormFromOption(selectedOption);
                 }
+
+
             })
             .catch(error => console.error("Error reloading users:", error));
     }
@@ -98,16 +133,18 @@ document.addEventListener("DOMContentLoaded", function() {
         const userData = localStorage.getItem('currentUser') ? JSON.parse(localStorage.getItem('currentUser')) : null;
         const profile = userData ? userData.profile || {} : {};
         const user = userData ? userData.user || {} : {};
-        const localStorageProfileCode = profile.id || user.id || "";
-        
+        // CORREGIDO: Buscar Profile_code en las propiedades correctas
+        const localStorageProfileCode = profile.Profile_code || profile.user_code || profile.id || user.Profile_code || user.id || "";
+
+
         if (!profileCode) {
             alert("Selecciona un usuario para modificar.");
-    
-        }else if(!localStorageProfileCode){
+
+        } else if (!localStorageProfileCode) {
             alert("No hay un usuario logueado.");
             return;
         }
-        
+
         const formData = {
             Profile_code: profileCode || localStorageProfileCode
         };
@@ -121,9 +158,11 @@ document.addEventListener("DOMContentLoaded", function() {
         if (password && password.value.trim() !== "") formData.password = password.value.trim();
         if (card_no && card_no.value.trim() !== "") formData.card_no = card_no.value.trim();
         if (gender && gender.value.trim() !== "") formData.gender = gender.value.trim();
-
+    
         return formData;
     }
+
+
 
     function fillFormFromOption(opt) {
         if (!opt) return;
@@ -135,18 +174,19 @@ document.addEventListener("DOMContentLoaded", function() {
         password.value = opt.dataset.password || "";
         card_no.value = opt.dataset.card_no || "";
         gender.value = opt.dataset.gender || "";
+    
     }
 
     // Event listener para cuando cambie la selección del dropdown
     if (userList) {
-        userList.addEventListener("change", function() {
+        userList.addEventListener("change", function () {
             const opt = userList.options[userList.selectedIndex];
             fillFormFromOption(opt);
         });
     }
 
     if (modifyForm) {
-        modifyForm.addEventListener("submit", async function(e) {
+        modifyForm.addEventListener("submit", async function (e) {
             e.preventDefault(); // Prevenir el envío normal del formulario
 
             const formData = collectFormData();
@@ -182,8 +222,10 @@ document.addEventListener("DOMContentLoaded", function() {
                     if (data && data.ok) {
                         alert("Usuario modificado correctamente");
                         // Reload user list and update form with fresh data
+
                         const currentProfileCode = formData.Profile_code;
                         reloadUserListAndUpdateForm(currentProfileCode);
+                        
                     } else {
                         alert((data && data.error) || "No se pudo modificar el usuario");
                     }

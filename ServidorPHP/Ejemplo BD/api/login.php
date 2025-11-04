@@ -1,12 +1,10 @@
 <?php
      // Configuración agresiva de logging
-    ini_set('display_errors', 1);
-    ini_set('display_startup_errors', 1);
+    ini_set('display_errors', 0);
+    ini_set('display_startup_errors', 0);
     error_reporting(E_ALL);
     
-    // Configurar logging a un archivo específico
-    ini_set('log_errors', 1);
-    ini_set('error_log', 'C:\xampp\htdocs\RetoCrudHtml\php_errors.log'); // Ajusta esta ruta
+    
 
 
     header('Content-Type: application/json; charset=utf-8');
