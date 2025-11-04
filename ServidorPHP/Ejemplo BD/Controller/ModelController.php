@@ -91,6 +91,63 @@ class ModelController {
             'user_updated' => $userUpdated,
         ];
     }
+    // En ModelController.php
+public function registrarUsuario($username, $name, $surname, $email, $telephone, $password, $card_no, $gender) {
+    try {
+        // 1. Verificar si el username ya existe
+        $existingProfile = $this->profileModel->checkUsername($username);
+        if ($existingProfile) {
+            return ['success' => false, 'error' => 'El nombre de usuario ya existe'];
+        }
+
+        // 2. Verificar si el email ya existe
+        $existingEmail = $this->profileModel->checkEmail($email);
+        if ($existingEmail) {
+            return ['success' => false, 'error' => 'El email ya está registrado'];
+        }
+
+        // 3. Insertar en la tabla Profile_
+        $profileData = [
+            'user_name' => $username,
+            'name_' => $name,
+            'Surname' => $surname,
+            'email' => $email,
+            'Telephone' => $telephone,
+            'passwd' => $password // Considera hashear la contraseña
+        ];
+
+        $profileId = $this->profileModel->insertar($profileData);
+        
+        if (!$profileId) {
+            return ['success' => false, 'error' => 'Error al crear el perfil'];
+        }
+
+        // 4. Insertar en la tabla User_
+        $userData = [
+            'Profile_code' => $profileId,
+            'card_no' => $card_no,
+            'gender' => $gender
+        ];
+
+        $userInserted = $this->userModel->insertar($userData);
+        
+        if (!$userInserted) {
+            // Si falla insertar en User_, eliminar el profile creado
+            $this->profileModel->eliminar($profileId);
+            return ['success' => false, 'error' => 'Error al crear el usuario'];
+        }
+
+        return [
+            'success' => true,
+            'user_id' => $profileId,
+            'message' => 'Usuario registrado exitosamente'
+        ];
+
+    } catch (Exception $e) {
+        error_log("Error en registrarUsuario: " . $e->getMessage());
+        return ['success' => false, 'error' => 'Error interno del servidor'];
+    }
+}
 
     public function login($username, $password) {
     try {

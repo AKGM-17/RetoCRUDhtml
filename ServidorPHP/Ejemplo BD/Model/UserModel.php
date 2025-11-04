@@ -1,17 +1,20 @@
 <?php
 require_once 'User.php';
 
-class UserModel {
+class UserModel
+{
     private $conn;
 
-    public function __construct($db) {
+    public function __construct($db)
+    {
         if (!$db) {
             throw new Exception("Database connection failed");
         }
         $this->conn = $db;
     }
 
-    public function buscarPorProfile_Code($Profile_code) {
+    public function buscarPorProfile_Code($Profile_code)
+    {
         $query = "
             SELECT
                 p.user_code AS profile_code,
@@ -50,7 +53,8 @@ class UserModel {
         return null;
     }
 
-    public function borrarPorProfile_Code($Profile_code) {
+    public function borrarPorProfile_Code($Profile_code)
+    {
         $query = "DELETE FROM User_ WHERE Profile_code = :Profile_code";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':Profile_code', $Profile_code);
@@ -61,7 +65,8 @@ class UserModel {
         return false;
     }
 
-    public function getAllUsers() {
+    public function getAllUsers()
+    {
         $query = "
             SELECT 
                 p.user_code AS profile_code,
@@ -98,7 +103,8 @@ class UserModel {
         return $users;
     }
 
-    public function actualizarUser($user) {
+    public function actualizarUser($user)
+    {
         $query = "UPDATE User_ SET card_no = :card_no, gender = :gender WHERE Profile_code = :profile_code";
         $stmt = $this->conn->prepare($query);
 
@@ -115,6 +121,19 @@ class UserModel {
             return $stmt->rowCount() > 0;
         }
         return false;
+    }
+
+    public function insertar($data)
+    {
+        $query = "INSERT INTO User_ (Profile_code, card_no, gender) 
+              VALUES (:Profile_code, :card_no, :gender)";
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':Profile_code', $data['Profile_code']);
+        $stmt->bindParam(':card_no', $data['card_no']);
+        $stmt->bindParam(':gender', $data['gender']);
+
+        return $stmt->execute();
     }
 }
 ?>

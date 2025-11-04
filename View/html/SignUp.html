@@ -1,21 +1,17 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <link rel="stylesheet" type="text/css" href="../css/view.css">
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>SignUp</title>
+    <title>Registro - CRUD Users</title>
 </head>
-
 <body>
     <header id="header">
         <!-- Navbar se cargará dinámicamente -->
     </header>
     <main>
         <div id="modify">
-            <h2>User Data</h2>
-            <form action="#" method="post">
+            <h2>Crear Nueva Cuenta</h2>
+            <form action="#" method="post" id="signupForm">
                 <div class="form-flex">
                     <div class="avatar" aria-hidden="true"></div>
                     <div class="fields">
@@ -32,7 +28,7 @@
                             <input type="text" id="surname" name="surname" required>
                         </div>
                         <div class="field">
-                            <label for="gmail">Gmail:</label>
+                            <label for="gmail">Email:</label>
                             <input type="email" id="gmail" name="gmail" required>
                         </div>
                         <div class="field">
@@ -44,19 +40,29 @@
                             <input type="password" id="password" name="password" required>
                         </div>
                         <div class="field">
+                            <label for="confirmPassword">Confirm Password:</label>
+                            <input type="password" id="confirmPassword" name="confirmPassword" required>
+                        </div>
+                        <div class="field">
                             <label for="card_no">Card Number:</label>
                             <input type="text" id="card_no" name="card_no" required>
                         </div>
                         <div class="field">
                             <label for="gender">Gender:</label>
-                            <input type="text" id="gender" name="gender" required>
+                            <select id="gender" name="gender" required>
+                                <option value="">Select...</option>
+                                <option value="Masculino">Male</option>
+                                <option value="Femenino">Female</option>
+                                <option value="Otro">Other</option>
+                                <option value="Prefiero no decir">Prefer not to say</option>
+                            </select>
                         </div>
                     </div>
                 </div>
 
                 <div class="actions">
-                    <button type="submit" class="btn">Modify</button>
-                    <button type="button" class="btn btn-secondary">Delete</button>
+                    <button type="submit" class="btn">Sign Up</button>
+                    <button type="button" class="btn btn-secondary" onclick="window.location.href='LogIn.html'">Already have an account? Login</button>
                 </div>
             </form>
         </div>
@@ -66,7 +72,6 @@
     </footer>
 
     <script src="../JavaScript/ComponentLoader.js"></script>
-   
+    <script src="../JavaScript/SignUp.js"></script>
 </body>
-
 </html>

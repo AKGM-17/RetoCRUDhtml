@@ -69,6 +69,23 @@ class ProfileModel
         }
         return null;
     }
+    public function checkUsername($username)
+    {
+        $query = "SELECT * FROM Profile_ WHERE user_name = :username";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':username', $username);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function checkEmail($email)
+    {
+        $query = "SELECT * FROM Profile_ WHERE email = :email";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':email', $email);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
 
     public function getAllProfiles()
     {
@@ -104,50 +121,51 @@ class ProfileModel
     }
 
     // En el método authenticate de ProfileModel.php, modifica esta parte:
-    public function authenticate($username, $password) {
-    error_log("=== AUTHENTICATION DEBUG ===");
-    error_log("Input username: '$username'");
-    
-    $query = "SELECT * FROM Profile_ WHERE user_name = :username";
-    $stmt = $this->conn->prepare($query);
-    $stmt->bindParam(':username', $username);
-    $stmt->execute();
-    $result = $stmt->fetch(PDO::FETCH_ASSOC);
-    
-    if ($result) {
-        error_log("USER FOUND IN DATABASE");
-        $storedPassword = $result['passwd'] ?? '';
-        $inputPassword = $password;
-        
-        error_log("Password match: " . ($storedPassword === $inputPassword ? 'YES' : 'NO'));
-        
-        if ($storedPassword === $inputPassword) {
-            error_log("=== CREATING PROFILE OBJECT ===");
-            $pid = $result['user_code'];
-            $username = $result['user_name'] ?? null;
-            $name = $result['name_'] ?? null;
-            $surname = $result['Surname'] ?? null;
-            $gmail = $result['email'] ?? null;
-            $telephone = $result['Telephone'] ?? null;
-            $password = $result['passwd'] ?? null;
-            
-            error_log("Profile data - ID: $pid, Username: $username");
-            
-            $profile = new Profile($pid, $username, $name, $surname, $gmail, $telephone, $password);
-            error_log("Profile object created: " . ($profile ? "YES" : "NO"));
-            error_log("Profile ID: " . $profile->getId());
-            
-            return $profile;
+    public function authenticate($username, $password)
+    {
+        error_log("=== AUTHENTICATION DEBUG ===");
+        error_log("Input username: '$username'");
+
+        $query = "SELECT * FROM Profile_ WHERE user_name = :username";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':username', $username);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($result) {
+            error_log("USER FOUND IN DATABASE");
+            $storedPassword = $result['passwd'] ?? '';
+            $inputPassword = $password;
+
+            error_log("Password match: " . ($storedPassword === $inputPassword ? 'YES' : 'NO'));
+
+            if ($storedPassword === $inputPassword) {
+                error_log("=== CREATING PROFILE OBJECT ===");
+                $pid = $result['user_code'];
+                $username = $result['user_name'] ?? null;
+                $name = $result['name_'] ?? null;
+                $surname = $result['Surname'] ?? null;
+                $gmail = $result['email'] ?? null;
+                $telephone = $result['Telephone'] ?? null;
+                $password = $result['passwd'] ?? null;
+
+                error_log("Profile data - ID: $pid, Username: $username");
+
+                $profile = new Profile($pid, $username, $name, $surname, $gmail, $telephone, $password);
+                error_log("Profile object created: " . ($profile ? "YES" : "NO"));
+                error_log("Profile ID: " . $profile->getId());
+
+                return $profile;
+            } else {
+                error_log("=== PASSWORD MISMATCH ===");
+            }
         } else {
-            error_log("=== PASSWORD MISMATCH ===");
+            error_log("=== USER NOT FOUND ===");
         }
-    } else {
-        error_log("=== USER NOT FOUND ===");
+
+        error_log("=== RETURNING NULL ===");
+        return null;
     }
-    
-    error_log("=== RETURNING NULL ===");
-    return null;
-}
 
     public function actualizarProfile($profile)
     {
@@ -175,6 +193,33 @@ class ProfileModel
             return $stmt->rowCount() > 0;
         }
         return false;
+    }
+
+    public function insertar($data)
+    {
+        $query = "INSERT INTO Profile_ (user_name, name_, Surname, email, Telephone, passwd) 
+              VALUES (:user_name, :name_, :Surname, :email, :Telephone, :passwd)";
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':user_name', $data['user_name']);
+        $stmt->bindParam(':name_', $data['name_']);
+        $stmt->bindParam(':Surname', $data['Surname']);
+        $stmt->bindParam(':email', $data['email']);
+        $stmt->bindParam(':Telephone', $data['Telephone']);
+        $stmt->bindParam(':passwd', $data['passwd']);
+
+        if ($stmt->execute()) {
+            return $this->conn->lastInsertId();
+        }
+        return false;
+    }
+
+    public function eliminar($id)
+    {
+        $query = "DELETE FROM Profile_ WHERE user_code = :id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':id', $id);
+        return $stmt->execute();
     }
 }
 ?>
