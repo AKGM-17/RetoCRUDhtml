@@ -7,8 +7,15 @@ document.addEventListener("DOMContentLoaded", function () {
     const password = document.getElementById("password");
     const card_no = document.getElementById("card_no");
     const gender = document.getElementById("gender");
-    let currentAccount = document.getElementById("currentAccount");
 
+function disableUsernameField() {
+        if (username) {
+            username.disabled = true;
+            username.style.backgroundColor = "#f5f5f5";
+            username.style.color = "#666";
+            username.title = "Username no se puede modificar";
+        }
+    }
 
     function fillFormFromCurrentUser() {
         const currentUserData = localStorage.getItem('currentUser');
@@ -33,6 +40,9 @@ document.addEventListener("DOMContentLoaded", function () {
             password.value = profile.password || profile.passwd || profile.pass || "";
             card_no.value = user.card_no || user.cardNumber || user.card || "";
             gender.value = user.gender || user.gender_ || user.sexo || "";
+
+            // DESHABILITAR username después de llenar el formulario
+            disableUsernameField();
             
         } catch (error) {
             console.error("Error al parsear datos del usuario:", error);

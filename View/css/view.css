@@ -42,6 +42,10 @@ html, body {
     height: 120px;
     border-radius: 9999px;
     background: var(--bg-input);
+    background-image: url('../Media/User.png');
+    background-size: 75%;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 .fields {
@@ -125,7 +129,7 @@ textarea {
 
 @media (max-width: 600px) {
     .form-flex { flex-direction: column; align-items: stretch; }
-    .avatar { align-self: center; margin-bottom: 8px; }
+    .avatar { align-self: center; margin-bottom: 8px; background-size: 50%; background-position: center; background-repeat: no-repeat; }
     .field { flex-direction: column; align-items: stretch; }
     .field label { width: auto; text-align: left; }
 }
