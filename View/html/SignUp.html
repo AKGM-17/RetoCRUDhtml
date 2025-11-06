@@ -1,89 +1,90 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <link rel="stylesheet" type="text/css" href="../css/view.css">
-    </head>
-    <body>
-        <header>
-            <p>Registro</p>
-        </header>
+  <head>
+    <link rel="stylesheet" type="text/css" href="../css/view.css">
+  </head>
+  <body>
+    <header>
+      <p>Registro</p>
+    </header>
 
-        <main>
-            <div id="modify">
-                <h2>Sign Up</h2>
-                <form action="#" method="post">
-                    <div class="form-flex">
-                        <div class="fields">
-                            <div class="field">
-                                <label for="username">Username:</label>
-                                <input type="text" id="username" name="username" value="" required>
-                            </div>
+    <main>
+      <div id="modify">
+        <h2>Sign Up</h2>
+        <form action="#" method="post">
+          <div class="form-flex">
+            <div class="fields">
+              <!-- Username -->
+              <div class="field">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" value="" required>
+              </div>
 
-                            <div class="field">
-                                <label for="name">Name:</label>
-                                <input type="text" id="name" name="name" value="" required>
-                            </div>
+              <!-- Name -->
+              <div class="field">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" value="" required>
+              </div>
 
-                            <div class="field">
-                                <label for="surname">Surname:</label>
-                                <input type="text" id="surname" name="surname" value="" required>
-                            </div>
+              <!-- Surname -->
+              <div class="field">
+                <label for="surname">Surname:</label>
+                <input type="text" id="surname" name="surname" value="" required>
+              </div>
 
-                            <div class="field">
-                                <label for="gmail">Gmail:</label>
-                                <input type="email" id="gmail" name="gmail" value="" required>
-                            </div>
+              <!-- Gmail -->
+              <div class="field">
+                <label for="gmail">Gmail:</label>
+                <input type="email" id="gmail" name="gmail" value="" required>
+              </div>
 
-                            <div class="field">
-                                <label for="telephone">Telephone:</label>
-                                <input type="tel" id="telephone" name="telephone" value="">
-                            </div>
+              <!-- Telephone -->
+              <div class="field">
+                <label for="telephone">Telephone:</label>
+                <input type="tel" id="telephone" name="telephone" value="">
+              </div>
 
-                            <div class="field">
-                                <label for="password1">Password:</label>
-                                <div class="password-container">
-                                    <input type="password" id="password1" name="password" value="" required>
-                                    <button type="button" id="togglePassword" class="show-btn" aria-label="Mostrar contraseña">👁</button>
-                                </div>
-                            </div>
+              <!-- Card Number -->
+              <div class="field">
+                <label for="cardno">Card Number:</label>
+                <input type="number" id="cardno" name="cardno" value="" required>
+              </div>
 
-                            <div class="field">
-                                <label for="password2">Repeat password:</label>
-                                <input type="password" id="password2" name="password2" value="" required>
-                            </div>
-                        </div>
-                    </div>
+              <!-- Gender -->
+              <div class="field">
+                <label for="gender">Gender:</label>
+                <select id="gender" name="gender" required>
+                  <option value="">Select gender...</option>
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
 
-                    <div class="actions">
-                        <button type="submit" class="btn">Sign Up</button>
-                        <button type="button" class="btn btn-secondary back-btn" onclick="window.history.back()">Atrás</button>
-                    </div>
-                </form>
+              <!-- Password -->
+              <div class="field">
+                <label for="password1">Password:</label>
+                <input type="password" id="password1" name="password" value="" required>
+              </div>
+
+              <!-- Repeat Password -->
+              <div class="field">
+                <label for="password2">Repeat password:</label>
+                <input type="password" id="password2" name="password2" value="" required>
+              </div>
             </div>
-        </main> 
+          </div>
 
-        <footer>
-            <p>Pie de página - Registro</p>
-        </footer>
+          <div class="actions">
+            <button type="submit" class="btn">Sign Up</button>
+            <button type="button" class="btn btn-secondary" onclick="window.history.back()">Atrás</button>
+          </div>
+        </form>
+      </div>
+    </main>
 
-        <!-- 👇 Script movido al final -->
-        <script>
-            const passwordInput = document.getElementById('password1');
-            const passwordInput2 = document.getElementById('password2');
-            const togglePasswordBtn = document.getElementById('togglePassword');
-
-               togglePasswordBtn.addEventListener('click', () => {
-                if (passwordInput.type === 'password'&&passwordInput2.type==='password') {
-                    passwordInput.type = 'text';
-                    passwordInput2.type= 'text';
-                    togglePasswordBtn.textContent = '👁';
-                } else {
-                    passwordInput.type = 'password';
-                    passwordInput2.type = 'password';
-                    togglePasswordBtn.textContent = '👁';
-                }
-            });
-            
-        </script>
-    </body>
+    <footer>
+      <p>Pie de página - Registro</p>
+    </footer>
+  </body>
 </html>

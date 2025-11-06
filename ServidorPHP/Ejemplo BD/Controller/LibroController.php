@@ -19,16 +19,5 @@ class LibroController {
         }
     }
 
-    public function borrar($isbn) {
-        return $this->libroModel->borrarPorIsbn($isbn);
-    }
-
-    public function buscarUser($Profile_code) {
-        return $this->libroModel->buscarPorProfile_code($Profile_code);
-    }
-
-    public function buscarProfile($Profile_code) {
-        return $this->libroModel->buscarPorProfile_code($Profile_code);
-    }
 }
 ?>

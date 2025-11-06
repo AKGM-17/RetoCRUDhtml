@@ -163,3 +163,47 @@ textarea {
     .field { flex-direction: column; align-items: stretch; }
     .field label { width: auto; text-align: left; }
 }
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type="number"] {
+  appearance: none;
+  -moz-appearance: textfield;
+  -webkit-appearance: none;
+  padding: 8px 16px;
+  border: 0;
+  border-radius: 9999px;
+  font-size: 16px;
+  width: 100%;
+  box-sizing: border-box;
+  background: var(--bg-input);
+  outline: none;
+  color: var(--text-dark);
+  height: 38px; 
+  line-height: 1.5;
+}
+
+input[type="number"]:focus {
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.25);
+}
+
+select {
+  padding: 8px 16px;
+  border: 0;
+  border-radius: 9999px;
+  font-size: 16px;
+  width: 100%;
+  box-sizing: border-box;
+  background: var(--bg-input);
+  outline: none;
+  color: var(--text-dark);
+  cursor: pointer;
+}
+
+select option {
+  background: var(--bg-input);
+  color: var(--text-dark);
+}
