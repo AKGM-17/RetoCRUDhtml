@@ -1,90 +1,77 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <link rel="stylesheet" type="text/css" href="../css/view.css">
-  </head>
-  <body>
-    <header>
-      <p>Registro</p>
+    <title>Registro - CRUD Users</title>
+</head>
+<body>
+    <header id="header">
+        <!-- Navbar se cargará dinámicamente -->
     </header>
-
     <main>
-      <div id="modify">
-        <h2>Sign Up</h2>
-        <form action="#" method="post">
-          <div class="form-flex">
-            <div class="fields">
-              <!-- Username -->
-              <div class="field">
-                <label for="username">Username:</label>
-                <input type="text" id="username" name="username" value="" required>
-              </div>
+        <div id="modify">
+            <h2>Crear Nueva Cuenta</h2>
+            <form action="#" method="post" id="signupForm">
+                <div class="form-flex">
+                    <div class="avatar" aria-hidden="true"></div>
+                    <div class="fields">
+                        <div class="field">
+                            <label for="username">Username:</label>
+                            <input type="text" id="username" name="username" required>
+                        </div>
+                        <div class="field">
+                            <label for="name">Name:</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="field">
+                            <label for="surname">Surname:</label>
+                            <input type="text" id="surname" name="surname" required>
+                        </div>
+                        <div class="field">
+                            <label for="gmail">Email:</label>
+                            <input type="email" id="gmail" name="gmail" required>
+                        </div>
+                        <div class="field">
+                            <label for="telephone">Telephone:</label>
+                            <input type="tel" id="telephone" name="telephone">
+                        </div>
+                        <div class="field">
+                            <label for="password">Password:</label>
+                            <input type="password" id="password" name="password" required>
+                        </div>
+                        <div class="field">
+                            <label for="confirmPassword">Confirm Password:</label>
+                            <input type="password" id="confirmPassword" name="confirmPassword" required>
+                        </div>
+                        <div class="field">
+                            <label for="card_no">Card Number:</label>
+                            <input type="text" id="card_no" name="card_no" required>
+                        </div>
+                        <div class="field">
+                            <label for="gender">Gender:</label>
+                            <select id="gender" name="gender" required>
+                                <option value="">Select...</option>
+                                <option value="Masculino">Male</option>
+                                <option value="Femenino">Female</option>
+                                <option value="Otro">Other</option>
+                                <option value="Prefiero no decir">Prefer not to say</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
 
-              <!-- Name -->
-              <div class="field">
-                <label for="name">Name:</label>
-                <input type="text" id="name" name="name" value="" required>
-              </div>
-
-              <!-- Surname -->
-              <div class="field">
-                <label for="surname">Surname:</label>
-                <input type="text" id="surname" name="surname" value="" required>
-              </div>
-
-              <!-- Gmail -->
-              <div class="field">
-                <label for="gmail">Gmail:</label>
-                <input type="email" id="gmail" name="gmail" value="" required>
-              </div>
-
-              <!-- Telephone -->
-              <div class="field">
-                <label for="telephone">Telephone:</label>
-                <input type="tel" id="telephone" name="telephone" value="">
-              </div>
-
-              <!-- Card Number -->
-              <div class="field">
-                <label for="cardno">Card Number:</label>
-                <input type="number" id="cardno" name="cardno" value="" required>
-              </div>
-
-              <!-- Gender -->
-              <div class="field">
-                <label for="gender">Gender:</label>
-                <select id="gender" name="gender" required>
-                  <option value="">Select gender...</option>
-                  <option value="male">Male</option>
-                  <option value="female">Female</option>
-                  <option value="other">Other</option>
-                </select>
-              </div>
-
-              <!-- Password -->
-              <div class="field">
-                <label for="password1">Password:</label>
-                <input type="password" id="password1" name="password" value="" required>
-              </div>
-
-              <!-- Repeat Password -->
-              <div class="field">
-                <label for="password2">Repeat password:</label>
-                <input type="password" id="password2" name="password2" value="" required>
-              </div>
-            </div>
-          </div>
-
-          <div class="actions">
-            <button type="submit" class="btn">Sign Up</button>
-            <button type="button" class="btn btn-secondary" onclick="window.history.back()">Atrás</button>
-          </div>
-        </form>
-      </div>
+                <div class="actions">
+                    <button type="submit" class="btn">Sign Up</button>
+                    <button type="button" class="btn btn-secondary" onclick="window.location.href='LogIn.html'">Already have an account? Login</button>
+                </div>
+            </form>
+        </div>
     </main>
-
-    <footer>
-      <p>Pie de página - Registro</p>
+    <footer id="footer">
+        <!-- Footer se cargará dinámicamente -->
     </footer>
-  </body>
+
+    <script src="../JavaScript/ComponentLoader.js"></script>
+    <script src="../JavaScript/SignUp.js"></script>
+</body>
 </html>

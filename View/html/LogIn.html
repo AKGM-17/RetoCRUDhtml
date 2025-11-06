@@ -1,23 +1,32 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <link rel="stylesheet" type="text/css" href="../css/view.css">
-    </head>
-    <body>
-        <header>
-            <p>headertxt</p>
-        </header>
-        <main>
-            <div id="modify">
-                <form>
-                    <Label>User</Label><input type="text" id="usname" name="usname"/><br/><br/>
-                    <Label>Password</Label><input type="password" id="usname" name="usname" /><br/><br/>
-                    <button class="btn" id="log In">Log In</button> <button class="btn">Sing In</button>
-                </form>
-            </div>
-        </main> 
-        <footer>
-            <p>footertex</p>
-        </footer>
-    </body>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" type="text/css" href="../css/view.css">
+    <title>Log In</title>
+</head>
+
+<body>
+    <header id="header">
+        <!-- Navbar se cargará dinámicamente -->
+    </header>
+    <main>
+        <div id="modify">
+            <form>
+                <Label for="username">User</Label><input type="text" id="username" name="username" /><br /><br />
+                <Label for="password">Password</Label><input type="password" id="password" name="password" /><br /><br />
+                <button class="btn" id="logIn" type="button">Log In</button> <a href="SignUp.html" class="btn" id="signUp" style="text-decoration: none; text-align: center;">Sign Up</a>
+            </form>
+        </div>
+    </main>
+    <footer id="footer">
+        <!-- Footer se cargará dinámicamente -->
+    </footer>
+
+    <script src="../JavaScript/ComponentLoader.js" async></script>
+    <script src="../JavaScript/Login.js" defer></script>
+</body>
+
 </html>

@@ -7,8 +7,8 @@
     <title>Window Admin</title>
   </head>
   <body>
-    <header>
-      <p>Header Text</p>
+    <header id="header">
+      <!-- Navbar se cargará dinámicamente -->
     </header>
 
     <main>
@@ -56,6 +56,14 @@
                 <label for="password">Password:</label>
                 <input type="password" id="password" name="password" required>
               </div>
+              <div class="field">
+                <label for="card_no">Card Number:</label>
+                <input type="text" id="card_no" name="card_no" required>
+              </div>
+              <div class="field">
+                <label for="gender">Gender:</label>
+                <input type="text" id="gender" name="gender" required>
+              </div>
             </div>
           </div>
 
@@ -67,8 +75,13 @@
       </div>
     </main>
 
-    <footer>
-      <p>Footer</p>
+    <footer id="footer">
+      <!-- Footer se cargará dinámicamente -->
     </footer>
+
+    <script src="../JavaScript/ComponentLoader.js"></script>
+    <script src="../JavaScript/GetAllUsers.js"></script>
+    <script src="../JavaScript/DeleteUser.js" defer></script>
+    <script src="../JavaScript/ModifyUser.js" defer></script>
   </body>
 </html>

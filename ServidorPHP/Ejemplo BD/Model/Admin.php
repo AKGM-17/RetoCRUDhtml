@@ -1,33 +1,30 @@
 <?php
 require_once 'Profile.php';
 
-class User extends Profile {
+class Admin extends Profile {
     private $profileCode;
-    private $card_no;
-    private $gender;
+    private $current_account;
 
-    public function __construct($id, $username, $name, $surname, $gmail, $telephone, $password, $profileCode, $card_no, $gender) {
+    public function __construct($id, $username, $name, $surname, $gmail, $telephone, $password, $profileCode, $current_account) {
         parent::__construct($id, $username, $name, $surname, $gmail, $telephone, $password);
         $this->profileCode = $profileCode;
-        $this->card_no = $card_no;
-        $this->gender = $gender;
+        $this->current_account = $current_account;
     }
 
     public function getProfileCode() { return $this->profileCode; }
-    public function getCard_no() { return $this->card_no; }
-    public function getGender() { return $this->gender; }
+    public function getCurrent_account() { return $this->current_account; }
+
+    public function setCurrent_account($current_account) { $this->current_account = $current_account; }
+
     public function getUsername() { return parent::getUsername(); }
     public function getName() { return parent::getName(); }
     public function getSurname() { return parent::getSurname(); }
     public function getGmail() { return parent::getGmail(); }
     public function getTelephone() { return parent::getTelephone(); }
     public function getPassword() { return parent::getPassword(); }
-    public function setProfileCode($profileCode) { $this->profileCode = $profileCode; }
-    public function setCard_no($card_no) { $this->card_no = $card_no; }
-    public function setGender($gender) { $this->gender = $gender; }
 
     public function mostrar() {
-        return "[$this->profileCode] $this->card_no - $this->gender";
+        return "[$this->profileCode] $this->current_account";
     }
 }
 ?>
