@@ -8,50 +8,12 @@ document.addEventListener("DOMContentLoaded", function () {
     const password = document.getElementById("password");
     let card_no = document.getElementById("card_no");
     let gender = document.getElementById("gender");
-    let currentAccount = document.getElementById("currentAccount");
     const modifyForm = document.querySelector("form");
 
-    function saveUserToLocalStorage(userData, isAdmin) {
-        if (!userData) {
-            console.error("❌ No se proporcionaron datos para guardar");
-            return;
-        }
+    
 
-        console.log("💾 Guardando en localStorage...");
-        console.log("Datos recibidos:", userData);
-        console.log("Es admin:", isAdmin);
 
-        let userToSave;
 
-        if (isAdmin) {
-            userToSave = {
-                type: "admin",
-                profile: userData.profile || userData,
-                admin: userData.admin || userData.user || {},
-                is_admin: true
-            };
-        } else {
-            userToSave = {
-                type: "user",
-                profile: userData.profile || userData,
-                user: userData.user || userData.admin || {},
-                is_admin: false
-            };
-        }
-
-        console.log("📦 Objeto a guardar:", userToSave);
-
-        try {
-            localStorage.setItem('currentUser', JSON.stringify(userToSave));
-            console.log("✅ Usuario guardado en localStorage correctamente");
-
-            // Verificar que se guardó
-            const verified = localStorage.getItem('currentUser');
-            console.log("🔍 Verificación:", verified ? "✅ Guardado" : "❌ No guardado");
-        } catch (error) {
-            console.error("❌ Error guardando en localStorage:", error);
-        }
-    }
 
     //Funcion para cargar la lista de usuarios y actualizar el formulario en ModifyViewAdmin.html
     function reloadUserListAndUpdateForm(profileCode) {
@@ -102,7 +64,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     fillFormFromOption(selectedOption);
                 }
 
-
             })
             .catch(error => console.error("Error reloading users:", error));
     }
@@ -126,6 +87,8 @@ document.addEventListener("DOMContentLoaded", function () {
         option.dataset.gender = u.gender || "";
         return option;
     }
+    
+    
 
     function collectFormData() {
         const selected = userList ? userList.options[userList.selectedIndex] : null;
@@ -137,7 +100,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const localStorageProfileCode = profile.Profile_code || profile.user_code || profile.id || user.Profile_code || user.id || "";
 
 
-        if (!profileCode) {
+        if (!profileCode && window.location.pathname.includes('WindowAdmin.html')) {
             alert("Selecciona un usuario para modificar.");
 
         } else if (!localStorageProfileCode) {
@@ -174,6 +137,7 @@ document.addEventListener("DOMContentLoaded", function () {
         password.value = opt.dataset.password || "";
         card_no.value = opt.dataset.card_no || "";
         gender.value = opt.dataset.gender || "";
+        
     
     }
 
